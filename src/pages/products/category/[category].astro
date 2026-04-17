@@ -1,0 +1,59 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import { categories } from '../../../data/categories';
+import { getProductsByCategory } from '../../../data/products';
+
+export function getStaticPaths() {
+  return categories.map((category) => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const categoryProducts = getProductsByCategory(category.slug);
+---
+
+<Layout>
+  <section class="w-full max-w-6xl mx-auto px-4 pt-8 pb-20">
+    <Breadcrumb
+      items={[
+        { label: 'Products', href: '/products' },
+        { label: category.title },
+      ]}
+    />
+
+    <div class="mb-12">
+      <h1 class="text-3xl md:text-4xl font-semibold mb-4">{category.title}</h1>
+      <p class="text-gray-600 max-w-3xl">{category.description}</p>
+    </div>
+
+    <!-- Filter and Sort Controls (placeholder for future functionality) -->
+    <div
+      class="flex flex-wrap justify-between items-center mb-8 pb-4 border-b border-gray-200"
+    >
+      <div class="flex items-center gap-2">
+        <span class="text-gray-500 text-sm">{categoryProducts.length} products</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-medium">Sort:</span>
+          <select class="border border-gray-300 rounded-md px-2 py-1 text-sm">
+            <option>Featured</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Newest</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {categoryProducts.map((product) => <ProductCard product={product} />)}
+    </div>
+    <!-- Empty State -->
+  </section>
+</Layout>

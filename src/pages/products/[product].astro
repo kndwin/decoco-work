@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { products } from '../../data/products';
+import { getCategory } from '../../data/categories';
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { product: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const category = getCategory(product.category);
+---
+
+<Layout>
+  <section class="w-full max-w-6xl mx-auto px-4 pt-8 pb-20">
+    <Breadcrumb
+      items={[
+        { label: 'Products', href: '/products' },
+        ...(category
+          ? [{ label: category.title, href: `/products/category/${category.slug}` }]
+          : []),
+        { label: product.title },
+      ]}
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <!-- Product Images -->
+      <div>
+        <div class="rounded-2xl overflow-hidden mb-4 border border-gray-200">
+          <img src={product.image} alt={product.title} class="w-full" />
+        </div>
+      </div>
+      <!-- Product Details -->
+      <div>
+        <h1 class="text-3xl md:text-4xl font-semibold mb-2">{product.title}</h1>
+        <p class="text-gray-600 mb-4">{product.shortDescription}</p>
+        <div class="mb-6">
+          <p class="font-semibold text-2xl">${product.price}</p>
+        </div>
+        <div class="mb-4">
+          {
+            product.isNew && (
+              <span class="inline-block bg-black text-white text-xs px-3 py-1 rounded-full mr-2">
+                New
+              </span>
+            )
+          }
+        </div>
+        <div class="mb-8">
+          <button
+            class="bg-black text-white px-8 py-3 rounded-md hover:bg-gray-800 transition w-full md:w-auto mb-4 md:mb-0"
+          >
+            Contact to purchase
+          </button>
+        </div>
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Dimensions</h3>
+          <p class="text-gray-600">{product.dimensions}</p>
+        </div>
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Materials</h3>
+          <ul class="list-disc list-inside text-gray-600">
+            {product.materials.map((m) => <li>{m}</li>)}
+          </ul>
+        </div>
+        <div class="mb-6">
+          <h3 class="font-medium mb-2">Shipping</h3>
+          <p class="text-gray-600">{product.shipping}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Content from Markdown -->
+    <div class="mt-16 prose prose-lg max-w-none"></div>
+
+    <!-- Product Features -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 my-12">
+      <div class="text-center">
+        <div
+          class="bg-gray-100 w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8 h-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-medium mb-2">{product.features[0].title}</h3>
+        <p class="text-gray-600">{product.features[0].description}</p>
+      </div>
+      <div class="text-center">
+        <div
+          class="bg-gray-100 w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8 h-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-medium mb-2">{product.features[1].title}</h3>
+        <p class="text-gray-600">{product.features[1].description}</p>
+      </div>
+      <div class="text-center">
+        <div
+          class="bg-gray-100 w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8 h-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-medium mb-2">{product.features[2].title}</h3>
+        <p class="text-gray-600">{product.features[2].description}</p>
+      </div>
+    </div>
+  </section>
+</Layout>

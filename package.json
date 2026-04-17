@@ -1,0 +1,18 @@
+{
+  "name": "decoco",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.7",
+    "astro": "5.7.13",
+    "tailwindcss": "^4.1.7"
+  }
+}

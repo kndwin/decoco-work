@@ -1,0 +1,40 @@
+---
+import type { Product } from '../data/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const href = `/products/${product.slug}`;
+---
+
+<div class="group">
+  <a href={href}>
+    <div class="rounded-xl overflow-hidden mb-4 relative">
+      <img
+        src={product.image}
+        alt={product.title}
+        class="w-full h-72 object-cover transition duration-300 group-hover:blur-xs group-hover:scale-[1.05]"
+        loading="lazy"
+      />
+      <div class="absolute top-4 left-4">
+        {
+          product.isNew && (
+            <span class="bg-black text-white text-xs px-3 py-1 rounded-full">New</span>
+          )
+        }
+      </div>
+      <div
+        class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/10"
+      >
+        <span class="bg-white px-4 py-2 rounded-md font-medium">View Details</span>
+      </div>
+    </div>
+  </a>
+  <a href={href}>
+    <h3 class="font-medium text-lg">{product.title}</h3>
+    <p class="text-gray-500 mb-2">{product.shortDescription}</p>
+    <p class="font-semibold">${product.price}</p>
+  </a>
+</div>

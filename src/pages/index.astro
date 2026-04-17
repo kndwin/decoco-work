@@ -1,0 +1,267 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/products';
+import { categories } from '../data/categories';
+import { getProductsByCategory } from '../data/products';
+import logo from '../assets/logo.svg';
+
+const featured = products.filter((p) => p.featured);
+---
+
+<Layout>
+  <section class="w-full max-w-6xl mx-auto px-4 pt-8 pb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h1 class="text-5xl md:text-6xl font-semibold leading-none mb-6">
+          Crafted for <br />modern living
+        </h1>
+        <p class="text-gray-600 text-lg mb-8 max-w-md">
+          Discover our collection of thoughtfully designed furniture that combines style,
+          comfort, and sustainability.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="/products"
+            class="bg-black text-white px-8 py-3 rounded-md text-center hover:bg-gray-800 transition"
+          >
+            Shop Collection
+          </a>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+        <img
+          src="https://z-furnishing.com.au/cdn/shop/products/Hank-Sofa-Z-furnishing-1637306979.jpg?v=1716378857&width=1946"
+          alt="Modern leather sofa"
+          class="w-full h-full object-cover"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="w-full max-w-6xl mx-auto px-4 pt-8 pb-20">
+    <div class="flex justify-between items-end mb-12">
+      <div>
+        <span class="text-sm font-medium uppercase tracking-wider text-gray-500">
+          New Arrivals
+        </span>
+        <h2 class="text-3xl md:text-4xl font-semibold mt-2">Featured Products</h2>
+      </div>
+      <a
+        href="/products"
+        class="text-black font-medium border-b border-black pb-1 hidden md:block"
+      >
+        View All Products
+      </a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+      {featured.map((product) => <ProductCard product={product} />)}
+    </div>
+    <div class="mt-8 text-center md:hidden">
+      <a
+        href="/products"
+        class="inline-block border border-gray-300 px-6 py-3 rounded-md hover:border-black transition"
+      >
+        View All Products
+      </a>
+    </div>
+  </section>
+
+  <section class="w-full max-w-6xl mx-auto px-4 pt-8 pb-20">
+    <div class="mb-12 text-center">
+      <span class="text-sm font-medium uppercase tracking-wider text-gray-500">
+        Curated Selection
+      </span>
+      <h2 class="text-3xl md:text-4xl font-semibold mt-2">Browse by Category</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        [...categories]
+          .sort((a, b) => {
+            const order = ['living-room', 'bedroom', 'dining'];
+            return order.indexOf(a.slug) - order.indexOf(b.slug);
+          })
+          .map((category) => {
+            const count = getProductsByCategory(category.slug).length;
+            const displayName =
+              category.slug === 'living-room'
+                ? 'Living Room'
+                : category.title;
+            const altText =
+              category.slug === 'living-room'
+                ? 'Living Room Furniture'
+                : category.slug === 'bedroom'
+                  ? 'Bedroom Furniture'
+                  : 'Dining Furniture';
+            return (
+              <a
+                href={`/products/category/${category.slug}`}
+                class="group cursor-pointer"
+              >
+                <div class="rounded-xl overflow-hidden mb-4 relative">
+                  <img
+                    src={category.image}
+                    alt={altText}
+                    class="w-full h-64 object-cover transition duration-300 group-hover:blur-xs group-hover:scale-[1.05]"
+                  />
+                  <div class="absolute inset-0 bg-opacity-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                    <span class="bg-white px-4 py-2 rounded-md font-medium">Explore</span>
+                  </div>
+                </div>
+                <h3 class="text-xl font-medium">{displayName}</h3>
+                <p class="text-gray-500 mt-1">{count} items</p>
+              </a>
+            );
+          })
+      }
+    </div>
+  </section>
+
+  <section class="w-full max-w-6xl mx-auto px-4 pt-8 pb-20">
+    <div class="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
+      <div class="text-center mb-12">
+        <span class="text-sm font-medium uppercase tracking-wider text-gray-500">
+          Our Promise
+        </span>
+        <h2 class="text-3xl md:text-4xl font-semibold mt-2">Why Choose Decoco</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div
+            class="bg-gray-100 w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium mb-2">Quality Craftsmanship</h3>
+          <p class="text-gray-600">
+            Each piece is carefully crafted with attention to detail and built to last for
+            generations.
+          </p>
+        </div>
+        <div class="text-center">
+          <div
+            class="bg-gray-100 w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium mb-2">Sustainable Materials</h3>
+          <p class="text-gray-600">
+            We source eco-friendly materials and follow sustainable practices throughout our
+            production.
+          </p>
+        </div>
+        <div class="text-center">
+          <div
+            class="bg-gray-100 w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-medium mb-2">Free Delivery</h3>
+          <p class="text-gray-600">
+            Enjoy free shipping on all orders over $500, with white-glove delivery service
+            available.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="w-full max-w-6xl mx-auto px-4 pt-8 pb-20">
+    <div class="bg-gray-900 text-white rounded-2xl p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-1/2 h-full opacity-10">
+        <img src={logo.src} alt="" class="w-full h-full" />
+      </div>
+      <div class="max-w-2xl relative z-10">
+        <h2 class="text-3xl md:text-4xl font-semibold mb-4">Join Our Community</h2>
+        <p class="text-gray-300 mb-8">
+          Subscribe to our newsletter for exclusive offers, design inspiration, and first access
+          to new collections.
+        </p>
+        <form
+          method="POST"
+          action="?_action=subscribeNewsletter"
+          class="flex flex-col sm:flex-row gap-3"
+        >
+          <div class="flex-grow">
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email address"
+              class="px-4 py-3 rounded-md text-gray-800 w-full"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-white text-gray-900 font-medium px-6 py-3 rounded-md hover:bg-gray-100 transition"
+          >
+            Subscribe
+          </button>
+        </form>
+        <p class="text-gray-400 text-sm mt-4">
+          By subscribing, you agree to our Privacy Policy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector<HTMLFormElement>(
+        'form[action*="subscribeNewsletter"]',
+      );
+      const input = form?.querySelector<HTMLInputElement>('input[name="email"]');
+      if (form && input) {
+        input.addEventListener('input', (e) => {
+          const value = (e.target as HTMLInputElement).value;
+          const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+          if (value && !valid) {
+            input.setCustomValidity('Please enter a valid email address');
+          } else {
+            input.setCustomValidity('');
+          }
+        });
+      }
+    });
+  </script>
+</Layout>
