@@ -9,7 +9,12 @@ const { product } = Astro.props;
 const href = `/products/${product.slug}`;
 ---
 
-<div class="group">
+<div
+  class="group"
+  data-product-card
+  data-price={product.price}
+  data-is-new={product.isNew ? '1' : '0'}
+>
   <a href={href}>
     <div class="rounded-xl overflow-hidden mb-4 relative">
       <img

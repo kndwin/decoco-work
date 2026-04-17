@@ -7,25 +7,17 @@ export type Category = {
 
 export const categories: Category[] = [
   {
-    slug: 'dining',
-    title: 'Dining',
-    description:
-      'Elevate your dining experience with our thoughtfully designed tables, chairs, and dining furniture.',
-    image:
-      'https://z-furnishing.com.au/cdn/shop/files/beckdiningchair-4.jpg?v=1741238624&width=1620',
-  },
-  {
     slug: 'bedroom',
     title: 'Bedroom',
     description:
-      'Create a peaceful sanctuary with our collection of high-quality bedroom furniture for restful nights.',
+      'A considered bedroom suite where bed, bedside tables, dresser and pouf all speak the same language — soft textures, low profiles, quiet materials.',
     image: '/images/cloud-bed-set.jpeg',
   },
   {
     slug: 'living-room',
     title: 'Living room',
     description:
-      'Transform your living room with our comfortable and stylish furniture pieces designed for modern living.',
+      'Sofa sets built around one idea per piece — a deep cognac Chesterfield, a forest-green velvet three-seater — chosen to anchor a room rather than fill it.',
     image: '/images/green-velvet-set-main.jpeg',
   },
 ];

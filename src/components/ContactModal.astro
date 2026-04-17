@@ -1,0 +1,85 @@
+---
+import { contact } from '../data/contact';
+
+interface Props {
+  productTitle?: string;
+}
+
+const { productTitle } = Astro.props;
+const telHref = `tel:${contact.phone.replace(/\s+/g, '')}`;
+const mailSubject = productTitle
+  ? `Enquiry about ${productTitle}`
+  : 'Product enquiry';
+const mailHref = `mailto:${contact.email}?subject=${encodeURIComponent(mailSubject)}`;
+---
+
+<dialog
+  id="contact-modal"
+  class="fixed inset-0 m-auto backdrop:bg-black/50 rounded-2xl p-0 max-w-md w-[90vw] border border-gray-200 shadow-xl"
+>
+  <div class="p-8 relative">
+    <button
+      type="button"
+      data-close-contact-modal
+      aria-label="Close"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <h2 class="text-2xl font-semibold mb-2">Get in touch</h2>
+    <p class="text-gray-600 mb-6">
+      {
+        productTitle
+          ? `Contact us to purchase the ${productTitle} or ask any questions.`
+          : 'Reach out to us directly and we\u2019ll get back to you.'
+      }
+    </p>
+
+    <div class="space-y-5">
+      <div>
+        <p class="text-sm font-medium text-gray-500 mb-1">Phone</p>
+        <a href={telHref} class="text-lg font-medium hover:text-gray-600 transition">
+          {contact.phone}
+        </a>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500 mb-1">Email</p>
+        <a href={mailHref} class="text-lg font-medium hover:text-gray-600 transition">
+          {contact.email}
+        </a>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500 mb-1">Address</p>
+        <p class="text-gray-800">{contact.address}</p>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const modal = document.getElementById('contact-modal') as HTMLDialogElement | null;
+  if (modal) {
+    document.querySelectorAll<HTMLElement>('[data-open-contact-modal]').forEach((trigger) => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.showModal();
+      });
+    });
+    modal.querySelectorAll<HTMLElement>('[data-close-contact-modal]').forEach((btn) => {
+      btn.addEventListener('click', () => modal.close());
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.close();
+    });
+  }
+</script>

@@ -39,21 +39,63 @@ const categoryProducts = getProductsByCategory(category.slug);
       </div>
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2">
-          <span class="text-sm font-medium">Sort:</span>
-          <select class="border border-gray-300 rounded-md px-2 py-1 text-sm">
-            <option>Featured</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-            <option>Newest</option>
+          <label for="sort-select" class="text-sm font-medium">Sort:</label>
+          <select
+            id="sort-select"
+            class="border border-gray-300 rounded-md px-2 py-1 text-sm"
+          >
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="newest">Newest</option>
           </select>
         </div>
       </div>
     </div>
 
     <!-- Products Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    <div
+      id="products-grid"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+    >
       {categoryProducts.map((product) => <ProductCard product={product} />)}
     </div>
     <!-- Empty State -->
   </section>
+
+  <script>
+    const grid = document.getElementById('products-grid');
+    const select = document.getElementById('sort-select') as HTMLSelectElement | null;
+
+    if (grid && select) {
+      const cards = Array.from(
+        grid.querySelectorAll<HTMLElement>('[data-product-card]'),
+      );
+      const originalOrder = [...cards];
+
+      const sortBy = (mode: string) => {
+        let next: HTMLElement[];
+        if (mode === 'price-asc') {
+          next = [...cards].sort(
+            (a, b) => Number(a.dataset.price) - Number(b.dataset.price),
+          );
+        } else if (mode === 'price-desc') {
+          next = [...cards].sort(
+            (a, b) => Number(b.dataset.price) - Number(a.dataset.price),
+          );
+        } else if (mode === 'newest') {
+          next = [...cards].sort((a, b) => {
+            const diff = Number(b.dataset.isNew) - Number(a.dataset.isNew);
+            if (diff !== 0) return diff;
+            return originalOrder.indexOf(a) - originalOrder.indexOf(b);
+          });
+        } else {
+          next = originalOrder;
+        }
+        next.forEach((card) => grid.appendChild(card));
+      };
+
+      select.addEventListener('change', () => sortBy(select.value));
+    }
+  </script>
 </Layout>
