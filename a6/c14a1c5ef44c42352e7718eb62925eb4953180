@@ -1,0 +1,22 @@
+src/data/products.ts
+  s_1556eb2198ad4c::t_1345fb5eb38fb2 21,23-48,50-57,127-290
+src/pages/index.astro
+  s_1556eb2198ad4c::t_5d5417bb4a726a 139,141-142
+  s_1556eb2198ad4c::t_fab917843bcf4f 33-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "a6c14a1c5ef44c42352e7718eb62925eb4953180",
+  "prompts": {},
+  "sessions": {
+    "s_1556eb2198ad4c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1f3afbc9fffeZPEmepf5HJW9Uj",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kevin <kevin@sucasa.com.au>"
+    }
+  }
+}
