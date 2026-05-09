@@ -1,0 +1,33 @@
+src/pages/products/category/[category].astro
+  s_1556eb2198ad4c::t_d512505ce44330 76
+src/assets/logo.svg
+  s_1b3d4dbd5a109a::t_547d9cde8944f2 1-2
+src/pages/index.astro
+  s_1556eb2198ad4c::t_6594a5787d0074 6
+public/favicon.svg
+  s_1b3d4dbd5a109a::t_f84f4c0978757d 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "fff8ce8a485273fc63a2c2a3e335945fe7039284",
+  "prompts": {},
+  "sessions": {
+    "s_1556eb2198ad4c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1f3afbc9fffeZPEmepf5HJW9Uj",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kevin <kevin@sucasa.com.au>"
+    },
+    "s_1b3d4dbd5a109a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1f382b217ffe35NAu03TL2MvF7",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kevin <kevin@sucasa.com.au>"
+    }
+  }
+}
