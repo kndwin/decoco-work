@@ -23,13 +23,6 @@ const href = `/products/${product.slug}`;
         class="w-full h-72 object-cover transition duration-300 group-hover:blur-xs group-hover:scale-[1.05]"
         loading="lazy"
       />
-      <div class="absolute top-4 left-4">
-        {
-          product.isNew && (
-            <span class="bg-black text-white text-xs px-3 py-1 rounded-full">New</span>
-          )
-        }
-      </div>
       <div
         class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/10"
       >
