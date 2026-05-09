@@ -7,10 +7,6 @@ interface Props {
 
 const { productTitle } = Astro.props;
 const telHref = `tel:${contact.phone.replace(/\s+/g, '')}`;
-const mailSubject = productTitle
-  ? `Enquiry about ${productTitle}`
-  : 'Product enquiry';
-const mailHref = `mailto:${contact.email}?subject=${encodeURIComponent(mailSubject)}`;
 ---
 
 <dialog
@@ -36,12 +32,12 @@ const mailHref = `mailto:${contact.email}?subject=${encodeURIComponent(mailSubje
       </svg>
     </button>
 
-    <h2 class="text-2xl font-semibold mb-2">Get in touch</h2>
+    <h2 class="text-2xl font-semibold mb-2">{contact.businessName}</h2>
     <p class="text-gray-600 mb-6">
       {
         productTitle
           ? `Contact us to purchase the ${productTitle} or ask any questions.`
-          : 'Reach out to us directly and we\u2019ll get back to you.'
+          : 'Australian made custom sofas and bedding. High quality furniture and best prices.'
       }
     </p>
 
@@ -53,14 +49,12 @@ const mailHref = `mailto:${contact.email}?subject=${encodeURIComponent(mailSubje
         </a>
       </div>
       <div>
-        <p class="text-sm font-medium text-gray-500 mb-1">Email</p>
-        <a href={mailHref} class="text-lg font-medium hover:text-gray-600 transition">
-          {contact.email}
-        </a>
-      </div>
-      <div>
         <p class="text-sm font-medium text-gray-500 mb-1">Address</p>
         <p class="text-gray-800">{contact.address}</p>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-500 mb-1">Hours</p>
+        <p class="text-gray-800">{contact.hours}</p>
       </div>
     </div>
   </div>
