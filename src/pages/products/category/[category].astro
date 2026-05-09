@@ -45,8 +45,6 @@ const categoryProducts = getProductsByCategory(category.slug);
             class="border border-gray-300 rounded-md px-2 py-1 text-sm"
           >
             <option value="featured">Featured</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
             <option value="newest">Newest</option>
           </select>
         </div>
@@ -75,15 +73,7 @@ const categoryProducts = getProductsByCategory(category.slug);
 
       const sortBy = (mode: string) => {
         let next: HTMLElement[];
-        if (mode === 'price-asc') {
-          next = [...cards].sort(
-            (a, b) => Number(a.dataset.price) - Number(b.dataset.price),
-          );
-        } else if (mode === 'price-desc') {
-          next = [...cards].sort(
-            (a, b) => Number(b.dataset.price) - Number(a.dataset.price),
-          );
-        } else if (mode === 'newest') {
+        if (mode === 'newest') {
           next = [...cards].sort((a, b) => {
             const diff = Number(b.dataset.isNew) - Number(a.dataset.isNew);
             if (diff !== 0) return diff;
